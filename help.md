@@ -10,130 +10,108 @@
 
 [http://www.yaml.org/start.html](http://www.yaml.org/start.html)
 
-```
+```yaml
 # Comments in YAML look like this.
-
-################
-# SCALAR TYPES #
-################
-
-# Our root object (which continues for the entire document) will be a map,
-# which is equivalent to a dictionary, hash or object in other languages.
-key: value
-another_key: Another value goes here.
-a_number_value: 100
-scientific_notation: 1e+12
-boolean: true
-null_value: null
-key with spaces: value
-# Notice that strings don't need to be quoted. However, they can be.
-however: "A string, enclosed in quotes."
-"Keys can be quoted too.": "Useful if you want to put a ':' in your key."
-
-# Multiple-line strings can be written either as a 'literal block' (using |),
-# or a 'folded block' (using '>').
-literal_block: |
-    This entire block of text will be the value of the 'literal_block' key,
-    with line breaks being preserved.
-
-    The literal continues until de-dented, and the leading indentation is
-    stripped.
-
-        Any lines that are 'more-indented' keep the rest of their indentation -
-        these lines will be indented by 4 spaces.
-folded_style: >
-    This entire block of text will be the value of 'folded_style', but this
-    time, all newlines will be replaced with a single space.
-
-    Blank lines, like above, are converted to a newline character.
-
-        'More-indented' lines keep their newlines, too -
-        this text will appear over two lines.
-
-####################
-# COLLECTION TYPES #
-####################
-
-# Nesting is achieved by indentation.
-a_nested_map:
-    key: value
-    another_key: Another Value
-    another_nested_map:
-        hello: hello
-
-# Maps don't have to have string keys.
-0.25: a float key
-
-# Keys can also be multi-line objects, using ? to indicate the start of a key.
-? |
-    This is a key
-    that has multiple lines
-: and this is its value
-
-# YAML also allows collection types in keys, but many programming languages
-# will complain.
-
-# Sequences (equivalent to lists or arrays) look like this:
-a_sequence:
-    - Item 1
-    - Item 2
-    - 0.5 # sequences can contain disparate types.
-    - Item 4
-    - key: value
-      another_key: another_value
-    -
-        - This is a sequence
-        - inside another sequence
-
-# Since YAML is a superset of JSON, you can also write JSON-style maps and
-# sequences:
-json_map: {"key": "value"}
-json_seq: [3, 2, 1, "takeoff"]
-
-#######################
-# EXTRA YAML FEATURES #
-#######################
-
-# YAML also has a handy feature called 'anchors', which let you easily duplicate
-# content across your document. Both of these keys will have the same value:
-anchored_content: &anchor_name This string will appear as the value of two keys.
-other_anchor: *anchor_name
-
-# YAML also has tags, which you can use to explicitly declare types.
-explicit_string: !!str 0.5
-# Some parsers implement language specific tags, like this one for Python's
-# complex number type.
-python_complex_number: !!python/complex 1+2j
-
-####################
-# EXTRA YAML TYPES #
-####################
-
-# Strings and numbers aren't the only scalars that YAML can understand.
-# ISO-formatted date and datetime literals are also parsed.
-datetime: 2001-12-15T02:59:43.1Z
-datetime_with_spaces: 2001-12-14 21:59:43.10 -5
-date: 2002-12-14
-
-# The !!binary tag indicates that a string is actually a base64-encoded
-# representation of a binary blob.
-gif_file: !!binary |
-    R0lGODlhDAAMAIQAAP//9/X17unp5WZmZgAAAOfn515eXvPz7Y6OjuDg4J+fn5
-    OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
-    +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
-    AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
-
-# YAML also has a set type, which looks like this:
-set:
-    ? item1
-    ? item2
-    ? item3
-
-# Like Python, sets are just maps with null values; the above is equivalent to:
-set2:
-    item1: null
-    item2: null
-    item3: null
-
+swagger: 2.0
+info:
+  version: "0.0.1"
+  title: "Twitter search example"
+  description: "Twitter search example"
+  termsOfService: "http://apigee.com/about/terms"
+  contact:
+    name: "Apigee 127"
+    url: "https://github.com/apigee-127"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "localhost"
+basePath: "/"
+schemes:
+  - "http"
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+x-volos-resources:
+  cache:
+    provider: "volos-cache-memory"
+    options:
+      - "name"
+      -
+        ttl: 10000
+  quota:
+    provider: "volos-quota-memory"
+    options:
+      -
+        timeUnit: "minute"
+        interval: 1
+        allow: 2
+  oauth2:
+    provider: "volos-oauth-apigee"
+    options:
+      -
+        NOTE: "This section is replaced by app.js."
+    validGrantTypes:
+      - "client_credentials"
+      - "authorization_code"
+      - "implicit_grant"
+      - "password"
+    passwordCheck: "passwordCheck"
+    paths:
+      note: "these will be placed in the paths section"
+      authorize: "/authorize"
+      token: "/accessToken"
+      invalidate: "/invalidate"
+      refresh: "/refresh"
+paths:
+  /twitter:
+    x-swagger-router-controller: "twitter"
+    x-volos-authorizations:
+      oauth2: []
+    x-volos-apply:
+      cache: []
+      quota: []
+    get:
+      description: "Returns the results of a search of Twitter"
+      summary: "Returns the results of a search of Twitter"
+      operationId: "search"
+      produces:
+        - "application/json"
+      parameters:
+        -
+          name: "search"
+          in: "query"
+          description: "The Query to pass to Twitter"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Twitter search response"
+          schema:
+            $ref: "#/definitions/TwitterSearchResponse"
+        default:
+          description: "Error payload"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+definitions:
+  TwitterSearchResponse:
+    required:
+      - "name"
+    properties:
+      name:
+        type: "string"
+      tag:
+        type: "string"
+  ErrorModel:
+    required:
+      - "code"
+      - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
 
 ```
