@@ -12,23 +12,31 @@
 
 ```yaml
 # Comments in YAML look like this.
+# Make sure you have the swagger: 2 at the top
 swagger: 2.0
+# The info section has information about your API
 info:
+# Strings should be "quoted" with double-quotes
   version: "0.0.1"
   title: "Twitter search example"
   description: "Twitter search example"
   termsOfService: "http://apigee.com/about/terms"
+# Optional Contact Information:
   contact:
     name: "Apigee 127"
     url: "https://github.com/apigee-127"
   license:
     name: "MIT"
     url: "http://opensource.org/licenses/MIT"
+# Optional host, used for hitting the implementation of the API
 host: "localhost"
+# Optional Basepath of the API
 basePath: "/"
+# Schemes: http, https, ws, wss
 schemes:
   - "http"
   - "https"
+# Specify MIME Types
 consumes:
   - "application/json"
 produces:
