@@ -64,9 +64,9 @@ x-volos-resources:
 # - 'quota' is the name of the provider that must be used to reference this configuration for a specific resource/operation
 # - 'provider' specifies the provider type within Volos.js that will be used.  
 #     Options are:
-#     - "volos-cache-memory"
-#     - "volos-cache-apigee"
-#     - "volos-cache-redis"
+#     - "volos-quota-memory"
+#     - "volos-quota-apigee"
+#     - "volos-quota-redis"
 # - 'options' specifies the options to configure the cache provider.  Options may be specific to the type of provider.
   quota:
     provider: "volos-quota-memory"
@@ -75,6 +75,7 @@ x-volos-resources:
         timeUnit: "minute"
         interval: 1
         allow: 2
+# may be going away andor changing
   oauth2:
     provider: "volos-oauth-apigee"
     options:
@@ -92,6 +93,13 @@ x-volos-resources:
       token: "/accessToken"
       invalidate: "/invalidate"
       refresh: "/refresh"
+# #/paths: documentation
+#
+# The 'paths' section defines one or more paths that are the resources of your API.  They pust start with a '/'.
+# You can use path templating as follows: /resource/pets/{pet_id}/visits/{visit_id}
+# 'x-swagger-router-controller' is an extension that can be specified at the 'path' level.  This maps to a controller specified in {project}/api/controllers/{controller_name}.js.  If this is not specified at an operation level no routing takes place in the Swagger middleware.
+# 'x-volos-authorizations' is an extension that specifies what OAuth provider and parameters (scopes) to use.  This may change.
+# 'x-volos-apply' specifies the Volos.js providers that should be applied to the path.  If these are specified at the 'path' level they apply to all operations for the path.  This can also be applied at an operation (HTTP Verb) level. 
 paths:
   /twitter:
     x-swagger-router-controller: "twitter"
@@ -100,6 +108,14 @@ paths:
     x-volos-apply:
       cache: []
       quota: []
+#
+# #/paths/{verb}: Documentation
+#
+# You can specify one or more HTTP verbs (get, put, post, delete) per path
+# 'description' and 'summary' are text strings for describing what the operation does
+# 'operationId' is used by Swagger Tools to map to the operation on the controller specified with 'x-swagger-router-controller'
+# 'produces' is a YAML string array that allows you to specify the format of the request and response for this operation.  These can be specified at a global level and overridden per operation.
+# 'parameters' is a YAML object array.  You can specify path, query and body parameters with the 'in' property of the parameter.  You can also reference a 'definition' of a model (schema) that is defined in the 'definitions' section later int he document.
     get:
       description: "Returns the results of a search of Twitter"
       summary: "Returns the results of a search of Twitter"
