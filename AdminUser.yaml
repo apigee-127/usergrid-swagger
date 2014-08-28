@@ -15,12 +15,12 @@ paths:
       summary: Creating an admin user
       description: Use the POST method to create an admin user.
       parameters:
-        - name: userproperty
+        - name: adminuserproperty
           in: body
           description: One or more sets of user properties of which username is mandatory and must be unique
           required: true
           schema:
-            $ref: User Property
+            $ref: Admin User Property
       tags:
         - User Info
       responses:
@@ -1407,6 +1407,370 @@ paths:
           description: Unexpected error
           schema:
             $ref: Error 
+  /{orgID}/{appID}/roles/{roleID}/users/{userID}:
+    post:
+      summary: Add a user to a role
+      description:  Use the POST method to add a user to a role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of added user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+    delete:
+      summary:  Delete a user from a role
+      description: Use the DELETE method to delete a user from a role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of deleted user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/roles/{roleID}/users:
+    get:
+      summary: Get the users in a role
+      description: Use the GET method to get the users in a role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of retrieved user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/users:
+    post:
+      summary: Create a user in the users collection
+      description: Use the POST method to create a user in the users collection.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string   
+        - name: userproperty
+          in: body
+          description: the properties of the user
+          required: true
+          schema:
+            $ref: User Property
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of created user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+    get:
+      summary: Query to get users
+      description: Use the GET method to get users though query statement.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: queryStatement
+          in: query
+          description: the query statement of the user info
+          required: true
+          type: string
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of retrieved user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/users/{user}/password:
+    post:
+      summary: Set a user's password or reset the user's existing password
+      description: Use the POST method to set a user's password or reset the user's existing password.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: username
+          in: path
+          description: the username of the user.
+          required: true
+          type: string
+        - name: ResetPW
+          in: body
+          description: the user's old and new password
+          required: true
+          schema:
+            $ref: ResetPW    
+      tags:
+        - Action Response Info
+      responses:
+        "200":
+          description: An array of complete messages
+          schema:
+            $ref: Action Response Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error   
+  /{orgID}/{appID}/users/{userID}:
+    get:
+      summary: Retrieve a user
+      description: Use the GET method to retrieve a user.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name email or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of retrieved user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+    put:
+      summary: Update a user
+      description: Use the PUT method to update a user.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of updated user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+    delete:
+      summary: Delete a user
+      description: Use the DELETE method to delete a user.
+      parameters:    
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of deleted user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/users/{userID}/{relation}:
+    get:
+      summary: Query a user's collections or connections
+      description: Use the GET method to get a user's collections or connections through query statement.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string       
+        - name: relation
+          in: path
+          description: the relation between user and collections
+          required: true
+          type: string
+        - name: queryStatement
+          in: query
+          description: the query statement of the user info
+          required: true
+          type: string
+      tags:
+        - Entity Info
+      responses:
+        "200":
+          description: "An array of user's collections info."
+          schema:
+            $ref: Entity Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/users/{userID}/feed:
+    get:
+      summary: Get a user's feed
+      description: Use the GET method to get a user's feed.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string           
+      tags:
+        - Activity Feed
+      responses:
+        "200":
+          description: "An array of user's activity feed."
+          schema:
+            $ref: Activity Feed
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
 
 definitions:
   Permission Info:
@@ -1754,7 +2118,7 @@ definitions:
         type: string
       state:
         type: string
-  User Property:
+  Admin User Property:
     required:
       - username
     properties:
@@ -1765,6 +2129,12 @@ definitions:
       name:
         type: string
       password:
+        type: string
+  User Property:
+    required:
+      - username
+    properties:
+      username:
         type: string
   User Info:
     properties:
@@ -1798,9 +2168,22 @@ definitions:
       htmldisplayEmailAddress:
         type: string
         description: the HTML display of the email of a user
+      organization:
+        type: string
+        description: the orgnization of the user
+      picture:
+        type: string
+        description: the uri of the user's picture
+      uri:
+        type: string
+        description: the uri of the user
+      path:
+        type: string
+        description: the path of the user
       completeMsg:
         schema:
           $ref: Action Response Info
+
   Action Response Info:
     properties:
       action:
