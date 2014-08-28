@@ -129,6 +129,11 @@ paths:
           description: "The Query to pass to Twitter"
           required: true
           type: "string"
+#
+# #/paths/{verb}/responses: Documentation
+#
+# 'responses' defines the HTTP response codes and mode/schema of the response body.  Here the 'TwitterSearchResponse' definition in the 'definitions' section is beinf referenced for a 200 OK response.  Otherwise, the default ErrorModel would describe the model of the response body.
+#
       responses:
         200:
           description: "Twitter search response"
@@ -138,6 +143,11 @@ paths:
           description: "Error payload"
           schema:
             $ref: "#/definitions/ErrorModel"
+#
+# #/definitions: Documentation
+#
+# 'responses' defines the HTTP response codes and mode/schema of the response body.  Here the 'TwitterSearchResponse' definition in the 'definitions' section is beinf referenced for a 200 OK response.  Otherwise, the default ErrorModel would describe the model of the response body.
+#
 definitions:
   TwitterSearchResponse:
     required:
