@@ -36,18 +36,38 @@ basePath: "/"
 schemes:
   - "http"
   - "https"
-# Specify MIME Types
+# Specify MIME Types for message payload formats - consumes (request) and produces (resposne)
 consumes:
   - "application/json"
 produces:
   - "application/json"
+# x-volos-resources is an Apigee extension that specifies the configuration template for Volos.js services
+#   that are referenced by specific resources and operations.
+# This section is configuration only.  If the resources are not referenced on any resource/operation 
+#   then they will not be used
 x-volos-resources:
+# The following section configures caching using Volos.js.  
+# - 'cache' is the name of the provider that must be used to reference this configuration for a specific resource/operation
+# - 'provider' specifies the provider type within Volos.js that will be used.  
+#     Options are:
+#     - "volos-cache-memory"
+#     - "volos-cache-apigee"
+#     - "volos-cache-redis"
+# - 'options' specifies the options to configure the cache provider.  Options may be specific to the type of provider.
   cache:
     provider: "volos-cache-memory"
     options:
       - "name"
       -
         ttl: 10000
+# The following section configures Quota using Volos.js.  
+# - 'quota' is the name of the provider that must be used to reference this configuration for a specific resource/operation
+# - 'provider' specifies the provider type within Volos.js that will be used.  
+#     Options are:
+#     - "volos-cache-memory"
+#     - "volos-cache-apigee"
+#     - "volos-cache-redis"
+# - 'options' specifies the options to configure the cache provider.  Options may be specific to the type of provider.
   quota:
     provider: "volos-quota-memory"
     options:
