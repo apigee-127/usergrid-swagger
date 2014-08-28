@@ -1772,7 +1772,642 @@ paths:
           schema:
             $ref: Error
 
+  /{orgID}/{appID}/devices/{deviceID}/notifications:
+    post:
+      summary: Creating notifications for a single device
+      description: Use the POST method to create notifications for a single device. This request will target a specific device entity.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: deviceID
+          in: path
+          description: UUID of a device entity.
+          required: true
+          type: string 
+        - name: notification
+          in: body
+          description: These parameters are used when forming the notification portion of the request.
+          required: true
+          schema:
+            $ref: Notification Properties 
+        - name: schedule notification
+          in: body
+          description: To schedule a notification for a later time add the deliver parameter with a UNIX timestamp to the body of your request.
+          required: false
+          schema:
+            $ref: Schedule Notification
+        - name: set expiration
+          in: body
+          description: If a push service can't deliver a message to a device and needs to resend it you can set a notification to expire after a certain date/time.
+          required: false
+          schema:
+            $ref: Set Expiration
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of created notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/devices/*/notifications:
+    post:
+      summary: Creating notifications for all devices
+      description: Use the POST method to create notifications for all devices. This request will target all device entities.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string   
+        - name: notification
+          in: body
+          description: These parameters are used when forming the notification portion of the request.
+          required: true
+          schema:
+            $ref: Notification Properties 
+        - name: schedule notification
+          in: body
+          description: To schedule a notification for a later time add the deliver parameter with a UNIX timestamp to the body of your request.
+          required: false
+          schema:
+            $ref: Schedule Notification
+        - name: set expiration
+          in: body
+          description: If a push service can't deliver a message to a device and needs to resend it you can set a notification to expire after a certain date/time.
+          required: false
+          schema:
+            $ref: Set Expiration
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of created notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/users/{userID}/notifications: 
+    post:
+      summary: Creating notifications for a user
+      description: Use the POST method to create notifications for a user. This request will target a specific user entity.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: notification
+          in: body
+          description: These parameters are used when forming the notification portion of the request.
+          required: true
+          schema:
+            $ref: Notification Properties 
+        - name: schedule notification
+          in: body
+          description: To schedule a notification for a later time add the deliver parameter with a UNIX timestamp to the body of your request.
+          required: false
+          schema:
+            $ref: Schedule Notification
+        - name: set expiration
+          in: body
+          description: If a push service can't deliver a message to a device and needs to resend it you can set a notification to expire after a certain date/time.
+          required: false
+          schema:
+            $ref: Set Expiration
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of created notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error
+  /{orgID}/{appID}/groups/{path}/notifications:
+    post:
+      summary: Creating notifications for a group
+      description: Use the POST method to create notifications for a group. This request will target all users associated with a specific group entity.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string
+        - name: path
+          in: path
+          description: the path of the group
+          required: true
+          type: string
+        - name: notification
+          in: body
+          description: These parameters are used when forming the notification portion of the request.
+          required: true
+          schema:
+            $ref: Notification Properties
+        - name: schedule notification
+          in: body
+          description: To schedule a notification for a later time add the deliver parameter with a UNIX timestamp to the body of your request.
+          required: false
+          schema:
+            $ref: Schedule Notification
+        - name: set expiration
+          in: body
+          description: If a push service can't deliver a message to a device and needs to resend it you can set a notification to expire after a certain date/time.
+          required: false
+          schema:
+            $ref: Set Expiration
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of created notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error           
+  /{orgID}/{appID}/devices:
+    post:
+      summary: Creating notifications for user through targeting by location
+      description: Use the POST method to create notifications for user through targeting by location.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string
+        - name: queryStatement
+          in: query
+          description: the query statement of the location of the user
+          required: true
+          type: string
+        - name: notification
+          in: body
+          description: These parameters are used when forming the notification portion of the request.
+          required: true
+          schema:
+            $ref: Notification Properties   
+        - name: schedule notification
+          in: body
+          description: To schedule a notification for a later time add the deliver parameter with a UNIX timestamp to the body of your request.
+          required: false
+          schema:
+            $ref: Schedule Notification
+        - name: set expiration
+          in: body
+          description: If a push service can't deliver a message to a device and needs to resend it you can set a notification to expire after a certain date/time.
+          required: false
+          schema:
+            $ref: Set Expiration
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of created notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error       
+  /{orgID}/{appID}/notifications:
+    get:
+      summary: Getting one or more notifications
+      description: Use the GET method to get one or more notifications.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string    
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of retrieved notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error             
+  /{orgID}/{appID}/{receiptID}/*/notifications:
+    get:
+      summary: Getting notifications associated with one or more receipts
+      description: Use the GET method to get notifications associated with one or more receipts.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: receiptID
+          in: path
+          description: the identification of the receipt
+          required: true
+          type: string
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of retrieved notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/{notificationID}/*/queue:
+    get:
+      summary: Getting the list of devices associated with one or more notifications before the notifications are sent
+      description: Use the GET method to get the list of devices associated with one or more notifications before the notifications are sent.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: notificationID
+          in: path
+          description: the identification of the notification
+          required: true
+          type: string
+      tags:
+        - Device Info
+      responses:
+        "200":
+          description: "An array of retrieved device's info."
+          schema:
+            $ref: Device Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /my-org/sandbox/notifications/{notificationID}:
+    put:
+      summary: Canceling sent notifications
+      description: Use the PUT method to cancel sent notifications
+      parameters:
+        - name: notificationID
+          in: path
+          description: the identification of the notification
+          required: true
+          type: string
+        - name: cancelMsg
+          in: body
+          description: indicete whether is canceled or not
+          required: true
+          schema:
+            $ref: CancelMSG        
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of canceled notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/notifications/{notificationID}:
+    delete:
+      summary: Deleting unsent notifications
+      description: Use the DELETE method to delete unsent notifications.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: notificationID
+          in: path
+          description: the identification of the notification
+          required: true
+          type: string   
+      tags:
+        - Notification Info
+      responses:
+        "200":
+          description: "An array of deleted notification's info."
+          schema:
+            $ref: Notification Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/receipts:
+    get:
+      summary: Getting one or more receipts
+      description: Use the GET method to get one or more receipts
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string         
+      tags:
+        - Receipt Info
+      responses:
+        "200":
+          description: "An array of retrieved receipt's info."
+          schema:
+            $ref: Receipt Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/{deviceID}/*/receipts:
+    get:
+      summary: Getting receipts associated with one or more devices
+      description: Use the method GET to get receipts associated with one or more devices.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: deviceID
+          in: path
+          description: one of the device's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Receipt Info
+      responses:
+        "200":
+          description: "An array of retrieved receipt's info."
+          schema:
+            $ref: Receipt Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/{notificationID}/*/receipts:
+    get:
+      summary: Get receipts for one or more notifications
+      description: Use the GET method to get receipts for one or more notifications.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: notificationID
+          in: path
+          description: one of the notification's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Receipt Info
+      responses:
+        "200":
+          description: "An array of retrieved receipt's info."
+          schema:
+            $ref: Receipt Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error       
 definitions:
+  CancelMSG:
+    required:
+      - canceled
+    properties:
+      canceled:
+        type: boolean
+  Receipt Info:
+    properties:
+      uuid:
+        type: string
+        description: unique entity ID
+      type:
+        type: string
+        description: type of entity  
+      created:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was created
+        format: int32
+      modified:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was last modified
+        format: int32
+      payloads:
+        type: string
+        description: the push notifications to be delivered  
+      errorMessage:
+        type: string
+        description: error message returned by the notification service (APNs or GCM) if the notification fails entirely
+      errorCode:
+        type: string
+        description: error code returned by the notification service
+      sent: 
+        type: number
+        description: UTC timestamp in milliseconds for when the notification was sent
+      metadata:
+        schema:
+          $ref: Metadata   
+      completeMsg:
+        schema:
+          $ref: Action Response Info
+  Device Info:
+    properties:
+      uuid:
+        type: string
+        description: unique entity ID
+      type:
+        type: string
+        description: type of entity
+      name: 
+        type: string
+        description: notifier display name
+      created:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was created
+        format: int32
+      modified:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was last modified
+        format: int32
+      metadata:
+        schema:
+          $ref: Metadata   
+      completeMsg:
+        schema:
+          $ref: Action Response Info
+  Schedule Notification:
+    required:
+      - timestamp
+    properties:
+      timestamp:
+        type: number
+        format: int32
+  Set Expiration:
+    required:
+      - timestamp
+    properties:
+      timestamp:
+        type: number
+        format: int32
+  Notification Info:
+    required:
+      - payloads
+    properties:
+      uuid:
+        type: string
+        description: Unique entity ID
+      type:
+        type: string
+        description: type of entity
+      created:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was created
+        format: int32
+      modified:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was last modified
+        format: int32
+      payloads:
+        type: string
+        description: the push notifications to be delivered  
+      errorMessage:
+        type: string
+        description: error message returned by the notification service (APNs or GCM) if the notification fails entirely
+      scheduled:
+        type: boolean
+        description: whether the notification is currently scheduled for delivery
+      state:
+        type: string
+        description: The current delivery status of the notification "FINISHED", "SCHEDULED" or "CANCELED"
+      metadata:
+        schema:
+          $ref: Metadata 
+      completeMsg:
+        schema:
+          $ref: Action Response Info
+  Notifier Info:
+    required:
+      - provider
+      - environment
+    properties:
+      uuid:
+        type: string
+        description: unique entity ID
+      type:
+        type: string
+        description: type of entity
+      name: 
+        type: string
+        description: notifier display name
+      created:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was created
+        format: int32
+      modified:
+        type: number
+        description: UTC timestamp in milliseconds of when the entity was last modified
+        format: int32
+      provider:
+        type: string
+        description: push notification provider "apple" or "google"
+      environment:
+        type: string
+        description: the environment that corresponds to your app "development" or "production"
+      metadata:
+        schema:
+          $ref: Metadata
+  Notification Properties:
+    type: array
+    items:
+      $ref: Notification Property
+  Notification Property:
+    required:
+      - notifier
+      - message
+    properties:
+      notifier:
+        schema:
+          $ref: Notifier Info
+      message:
+        type: string
+        description: the push notitfication message that will be delivered to the user
   Permission Info:
     properties:
       applicationName: 
