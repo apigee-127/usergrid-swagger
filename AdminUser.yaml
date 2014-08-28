@@ -147,7 +147,7 @@ paths:
   management/users/{userID}/activate{token}{confirm_email}:
     get:
       summary: Activating an admin user
-      description: Use the GET method to activate an admin user from a link provided in an email notification. The complete request URI should be "GET /management/organizations/{org}/users/{user|username|email|uuid}/activate?token={token}&confirm={confirm_email}".
+      description: Use the GET method to activate an admin user from a link provided in an email notification. The complete request URL should be "GET /management/organizations/{org}/users/{user|username|email|uuid}/activate?token={token}&confirm={confirm_email}".
       parameters:
         - name: userID
           in: path
@@ -337,7 +337,7 @@ paths:
   management/organizations|orgs/{orgID}/activate{token}{confirm_email}:
     get:
       summary: Activating an organization
-      description: Use the GET method to activate an organization from a link provided in an email notification. The complete request URI is "GET /organizations|orgs/{org_name}|{uuid}/activate?token={token}&confirm={confirm_email}"
+      description: Use the GET method to activate an organization from a link provided in an email notification. The complete request URL is "GET /organizations|orgs/{org_name}|{uuid}/activate?token={token}&confirm={confirm_email}"
       parameters:
         - name: orgID
           in: path
@@ -989,7 +989,568 @@ paths:
           description: Unexpected error
           schema:
             $ref: Error 
+  /{orgID}/{appID}/events:
+    post:
+      summary: Create an event
+      description: Use the POST method to create an event
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: eventproperty
+          in: body
+          description: the required property of the event
+          required: true
+          schema:
+            $ref: Event Property        
+      tags:
+        - Event Info
+      responses:
+        "200":
+          description: "An array of created event's info."
+          schema:
+            $ref: Event Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/groups:
+    post:
+      summary: Create a new group
+      description: Use the POST method to create a new group
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupproperty
+          in: body
+          description: the property of the created group
+          required: true
+          schema:
+            $ref: Group Property
+      tags:
+        - Group Info
+      responses:
+        "200":
+          description: "An array of created group's info."
+          schema:
+            $ref: Group Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/groups/{groupID}/users/{userID}:
+    post:
+      summary: Add a user to a group
+      description: Use the POST method to add a user to a group.
+      parameters:        
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupID
+          in: path
+          description: one of the group's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of added user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+    delete:
+      summary: Delete user from a group
+      description: Use the DELETE method to delete user from a group.
+      parameters:   
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupID
+          in: path
+          description: one of the group's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: userID
+          in: path
+          description: one of the user's identification which includes name or uuid.
+          required: true
+          type: string   
+      tags:
+        - User Info
+      responses:
+        "200":
+          description: "An array of deleted user's info."
+          schema:
+            $ref: User Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{org_id}/{app_id}/groups/{groupID}:
+    get:
+      summary: Get a group
+      description: Use the GET method to get a group.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupID
+          in: path
+          description: one of the group's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Group Info
+      responses:
+        "200":
+          description: "An array of retrieved group's info."
+          schema:
+            $ref: Group Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+    put:
+      summary: Update a group
+      description: Use the PUT method to update a group.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupID
+          in: path
+          description: one of the group's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Group Info
+      responses:
+        "200":
+          description: "An array of updated group's info."
+          schema:
+            $ref: Group Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/groups/{groupID}/feed:
+    get: 
+      summary: Get a group's feed
+      description: Use the GET method to get a group's feed.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: groupID
+          in: path
+          description: one of the group's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Activity Feed
+      responses:
+        "200":
+          description: "An array of group's activity"
+          schema:
+            $ref: Activity Feed
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+  /{orgID}/{appID}/roles:
+    post:
+      summary: Create a new role
+      description: Use the POST method to create a new role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string   
+        - name: roleproperty
+          in: body
+          description: the required properties of the role
+          required: true
+          schema:
+            $ref: Role Property      
+      tags:
+        - Role Info
+      responses:
+        "200":
+          description: "An array of created role's info."
+          schema:
+            $ref: Role Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+    get:
+      summary: Get the roles in an application
+      description: Use the GET method to get the roles in an application.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+      tags:
+        - Role Info
+      responses:
+        "200":
+          description: "An array of retrieved role's info."
+          schema:
+            $ref: Role Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/roles/{rolename}:
+    delete:
+      summary: Delete a role
+      description: Use the DELETE method to delete a role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: rolename
+          in: path
+          description: the name of the role
+          required: true
+          type: string
+      tags:
+        - Role Info
+      responses:
+        "200":
+          description: "An array of deleted role's info."
+          schema:
+            $ref: Role Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/roles/{roleID}/permissions:
+    post:
+      summary: Add permissions to a role
+      description: Use the POST method to add permissions to a role.
+      parameters:
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: permissionproperty
+          in: body
+          description: the properties of permissions
+          required: true
+          schema:
+            $ref: Permission Property
+      tags:
+        - Permission Info
+      responses:
+        "200":
+          description: "An array of created permission's info."
+          schema:
+            $ref: Permission Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+    get:
+      summary: Get permissions for a role
+      description: Use the GET method to get permissions for a role.
+      parameters: 
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string 
+      tags:
+        - Permission Info
+      responses:
+        "200":
+          description: "An array of retrieved permission's info."
+          schema:
+            $ref: Permission Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error  
+  /{orgID}/{appID}/roles/{roleID}/permissions{grant_url_pattern}:
+    delete:
+      summary: Delete permissions from a role
+      description: Use the DELETE method to delete permissions from a role. The complete request URL is "DELETE {org_id}/{app_id}/roles/{rolename|role_id}/permissions?permission={grant_url_pattern} ""
+      parameters:      
+        - name: orgID
+          in: path
+          description: one of the orgnization's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: appID
+          in: path
+          description: one of the application's identification which includes name or uuid.
+          required: true
+          type: string  
+        - name: roleID
+          in: path
+          description: one of the role's identification which includes name or uuid.
+          required: true
+          type: string 
+        - name: grant_url_pattern
+          in: path
+          description: the url of the pattern
+          required: true
+          type: string
+      tags:
+        - Permission Info
+      responses:
+        "200":
+          description: "An array of deleted permission's info."
+          schema:
+            $ref: Permission Info
+        default:
+          description: Unexpected error
+          schema:
+            $ref: Error 
+
 definitions:
+  Permission Info:
+    properties:
+      applicationName: 
+        type: string
+        description: the name of the application of the permission
+      entity:
+        schema:
+          $ref: Entity
+      url:
+        type: string
+        description: the url of the permission
+      applicationid:
+        type: string
+        description: the uuid of the application
+      parameters:
+        type: string
+        description: the parameters of the permission
+      organization:
+        type: string
+        description: the organization of the permission
+      permissiondata:
+        schema:
+          $ref: Permission Property
+  Permission Property:
+    required:
+      - operation
+      - resource_path
+    properties:
+      operation:
+        type: string
+        description: A comma-delimited set of HTTP methods (GET, PUT, POST, DELETE) that are allowed for the specified resource path.
+      resource_path:
+        type: string
+        description: The path to the resources to be accessed.
+  Role Info:
+    properties:
+      applicationName:
+        type: string
+        description: the application name of the event
+      count:
+        type: number
+        description: the numebr of the roles
+        format: int32
+      entity:
+        schema:
+          $ref: Entity
+      url:
+        type: string
+        description: the url of the event
+      applicationid:
+        type: string
+        description: the application uuid of the event
+      parameters:
+        type: string
+        description: the parameters of the event
+      organization:
+        type: string
+        description: the title of the organization
+      completeMsg:
+        schema:
+         $ref: Action Response Info    
+      path:
+        type: string  
+        description: the path of the role
+  Role Property:
+    required:
+      - title
+      - role name
+    properties:
+      title:
+        type: string
+        description: the title of the role
+      role name:
+        type: string
+        description: the name of the role
+  Event Info:
+    properties:
+      applicationName:
+        type: string
+        description: the application name of the event
+      entity:
+        schema:
+          $ref: Entity
+      url:
+        type: string
+        description: the url of the event
+      applicationid:
+        type: string
+        description: the application uuid of the event
+      parameters:
+        type: string
+        description: the parameters of the event
+      organization:
+        type: string
+        description: the title of the organization
+      completeMsg:
+        schema:
+         $ref: Action Response Info
+  Event Property:
+    required:
+      - timestamp
+    properties:
+      timestamp:
+        type: number
+        format : int32
+  Group Info:
+    properties:
+      uuID:
+        type: string
+        description: the uuid of the group
+      type:
+        type: string
+        description: the type of the group
+      created:
+        type: string
+        description: the created ID for the group
+      modified:
+        type: string
+        description: the modified ID for the group
+      path:
+        type: string
+        description: the path of the group
+      metadata:
+        schema:
+          $ref: Metadata
+      title:
+        type: string
+        description: the title of the group
+      completeMsg:
+        schema:
+          $ref: Action Response Info
+  Group Property:
+    required:
+      - title
+      - path
+    properties:
+      title: 
+        type: string
+        description: the title of the group
+      path:
+        type: string
+        description: the path of the group
   Entity Properties:
     type: array
     items:
@@ -1013,9 +1574,9 @@ definitions:
       path:
         type: string
         description: the path of the entity
-      uri:
+      url:
         type: string
-        description: the uri of the entity
+        description: the url of the entity
       entityproperty:
         schema:
           $ref: Entity
@@ -1249,11 +1810,13 @@ definitions:
         type: string
         description: the status of the requested action
       timestamp:
-        type: string
+        type: numebr
         description: the timestamp of the requested action
+        format: int32
       duration:
-        type: string
+        type: number
         description: the duration of the requested action
+        format: int32
       token:
         type: string 
         description: the token required for getting an AdminUser 
@@ -1308,7 +1871,29 @@ definitions:
         description: the cursor of the metadata
       path:
         type: string
-        description: the path of the metadata      
+        description: the path of the metadata 
+      sets:
+        schema:
+          $ref: Sets    
+      collections:
+        schema:
+          $ref: Collections
+  Collections:
+    properties:
+      activities:
+        type: string
+      feed:
+        type: string
+      roles:
+        type: string
+      users:
+        type: string 
+  Sets:
+    properties:
+      rolenames:
+        type: string
+      permissions:
+        type: string
   Actor:
     properties:
       displayname:
@@ -1352,6 +1937,11 @@ definitions:
         type: number
         description: the price of the entity
         format: int32
+      timestamp:
+        type: number
+        format: int32
+      message:
+        type: string
   Error:
     properties:
       code:
