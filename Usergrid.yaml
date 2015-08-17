@@ -1,4 +1,4 @@
-swagger: 2
+swagger: '2.0'
 info:
   title: Usergrid API
   description:  "Usergrid API"
@@ -6,11 +6,11 @@ info:
 host: api.usergrId.com
 schemes:
   - https
-basePath: /
+basePath: '/'
 produces:
   - application/json
 paths:
-  management/users:
+  "/management/users":
     post:
       summary: "Creating an admin user."
       description: "Create a whole new admin user."
@@ -32,7 +32,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/{userId}:     
+  "/management/users/{userId}":     
     put:
       summary: "Updating an admin user."
       description: "Update the info of an admin user."
@@ -65,7 +65,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/resetpw:
+  "/management/users/resetpw":
     post:
       summary: "Completing a password reset."
       description: "Complete the password reset through getting the newpassword and the old one for identification."
@@ -101,7 +101,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/{userId}/password:
+  "/management/users/{userId}/password":
     put:
       summary: "Setting an admin user's password."
       description: "Update an admin user's password through getting the newpassword and the old one for identification."
@@ -124,7 +124,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/{userId}/activate:
+  "/management/users/{userId}/activate":
     get:
       summary: "Activating an admin user."
       description: "Activate an admin user from a link provIded in an email notification. The complete request URL should be GET /management/organizations/{org}/users/{user|username|email|UUID}/activate?token={token}&confirm={confirm_email}."
@@ -151,7 +151,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/{userId}/reactivate:
+  "/management/users/{userId}/reactivate":
     get:
       summary: "Reactivating an admin user."
       description: "Reactivate an expired admin user."
@@ -168,7 +168,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/users/{userId}/feed:
+  "/management/users/{userId}/feed":
     get:
       summary: "Getting an admin user's activity feed."
       description: "Retrieve an admin user's activity feed."
@@ -235,7 +235,7 @@ paths:
           description:  "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs:
+  "/management/orgs":
     post:
       summary: "Creating an orgnization."
       description: "Create an orgnization through a form post."
@@ -257,7 +257,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}:
+  "/management/orgs/{orgId}":
     get:
       summary: "Getting an orgnization."
       description: "Retrieve an orgnization given a specified UUId or username."
@@ -274,7 +274,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}/activate:
+  "/management/orgs/{orgId}/activate":
     get:
       summary: "Activating an orgnization."
       description: "Activate an orgnization from a link provIded in an email notification. The complete request URL is 'GET /orgs/{org_name}|{UUID}/activate?token={token}&confirm={confirm_email}'"
@@ -301,7 +301,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error   
-  management/orgs/{orgId}/reactivate:    
+  "/management/orgs/{orgId}/reactivate":    
     get:
       summary: "Reactivating an orgnization"
       description: "Reactivate an expired orgnization."
@@ -318,7 +318,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}/credentials:
+  "/management/orgs/{orgId}/credentials":
     post:
       summary: "Generating orgnization client credentials."
       description: "Generate whole new credentials for an orgnization client."
@@ -351,7 +351,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}/feed:
+  "/management/orgs/{orgId}/feed":
     get:
       summary: "Getting an orgnization's activity feed."
       description: "Retrieve an orgnization's activity feed."
@@ -368,7 +368,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error   
-  management/orgs/{orgId}/apps:
+  "/management/orgs/{orgId}/apps":
     post:
       summary: "Creating an orgnization application."
       description: "Create an application for an orgnization through a form post."
@@ -391,7 +391,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}/apps/{appId}:
+  "/management/orgs/{orgId}/apps/{appId}":
     delete:
       summary: "Removing an application from the orgnization."
       description: "Remove an application from an orgnization through providing both Id of application and organization."
@@ -409,7 +409,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/orgs/{orgId}/apps/{appId}/credentials:
+  "/management/orgs/{orgId}/apps/{appId}/credentials":
     post:
       summary: "Generating application credentials."
       description: "Generate the client Id and client secret credentials for an application in an orgnization."
@@ -444,7 +444,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/orgs/{orgId}/apps:
+  "/management/orgs/{orgId}/apps":
     get:
       summary: "Getting the applications in an orgnization."
       description: "Retrieve the applications in an orgnization through providing both Id of application and organization."
@@ -461,7 +461,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error 
-  management/orgs/{orgId}/users/{userId}:
+  "/management/orgs/{orgId}/users/{userId}":
     put:
       summary: "Adding an admin user to an orgnization."
       description: "Add an existing admin user to an orgnization."
@@ -479,7 +479,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/orgs/{orgId}/users:
+  "/management/orgs/{orgId}/users":
     get:
       summary: "Getting the admin users in an orgnization."
       description: "Retrieve details about the admin users in an orgnization."
@@ -496,7 +496,7 @@ paths:
           description: "Unexpected error."
           schema:
             $ref: Error
-  management/orgs/{orgId}/users/{userId}:
+  "/management/orgs/{orgId}/users/{userId}":
     delete:
       summary: "Removing an admin user from an orgnization."
       description: "Remove an admin user from an orgnization through providing both Id of application and organization."
